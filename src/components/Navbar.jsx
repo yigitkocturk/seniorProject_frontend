@@ -18,7 +18,7 @@ const Navbar = () => {
                     <i className="fas fa-bars"></i>
                 </button>
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <a className="navbar-brand mt-1 mt-lg-0" href="#">
+                    <a className="navbar-brand mt-1 mt-lg-0" href="/">
                         <img
                             src={logo}
                             height="40"
@@ -26,7 +26,7 @@ const Navbar = () => {
                             loading="lazy"
                         />
                     </a>
-                    <a href="#" style={{textDecoration:'none'}}><p style={{paddingTop:"10px", fontSize:"20px", color:"#654E92"}}>Share Circle</p></a>
+                    <a href="/" style={{textDecoration:'none'}}><p style={{paddingTop:"10px", fontSize:"20px", color:"#654E92"}}>Share Circle</p></a>
                 </div>
                 <div className="d-flex align-items-center">
                    
@@ -65,7 +65,7 @@ const Navbar = () => {
                             aria-labelledby="navbarDropdownMenuAvatar"
                         >
                             <li>
-                                <a className="dropdown-item" href="/user">My profile</a>
+                                <a className="dropdown-item" href="/users">My profile</a>
                             </li>
                             <li>
                                 <a className="dropdown-item"  href="#">Logout</a>

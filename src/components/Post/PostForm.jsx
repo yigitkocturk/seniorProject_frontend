@@ -5,6 +5,7 @@ const PostForm = ({ userId, userName }) => {
     const [title, setTitle] = useState("");
     const [isSent, setIsSent] = useState(false);
     const [filtre, setFiltre] = useState("");
+    const [image, setImage] = useState("")
 
     const handleSubmit = (e) => {
         savePost();
@@ -12,6 +13,7 @@ const PostForm = ({ userId, userName }) => {
         setTitle("");
         setText("");
         setFiltre("");
+        setImage("")
     };
 
     const handleTitle = (value) => {
@@ -28,6 +30,10 @@ const PostForm = ({ userId, userName }) => {
         setFiltre(value);
     };
 
+    const handleImage = (value) => {
+        setImage(value);
+    };
+
     const savePost = () => {
         fetch("/posts", {
             method: "POST",
@@ -40,6 +46,7 @@ const PostForm = ({ userId, userName }) => {
                 userId: userId,
                 text: text,
                 filter: filtre,
+                image: image,
             }),
         })
             .then((res) => res.json())
@@ -65,7 +72,7 @@ const PostForm = ({ userId, userName }) => {
                         value={text}
                         onChange={(e) => handleText(e.target.value)}
                     ></input>
-                    <input type="file" className="form-control" id="customFile" style={{ width: "350px", margin: "10px" }} />
+                    <input type="file" className="form-control" id="customFile" style={{ width: "350px", margin: "10px" }}   value={image} onChange={(e) => handleImage(e.target.value)} />
                     <select
                         className="form-control"
                         style={{ width: "350px", marginLeft: "10px" }}

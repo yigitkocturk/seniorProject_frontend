@@ -64,7 +64,7 @@ export default function Post(props) {
   const [commentList, setCommentList] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
   const isInitialMount = useRef(true);
-  const [likeCount, setLikeCount] = useState(likes.length);
+  // const [likeCount, setLikeCount] = useState(likes.length);
   const [likeId, setLikeId] = useState(null);
   const [refresh, setRefresh] = useState(false);
   let disabled = localStorage.getItem("currentUser") == null ? true:false;
@@ -82,30 +82,30 @@ export default function Post(props) {
     setIsLiked(!isLiked);
     if (!isLiked) {
       saveLike();
-      setLikeCount(likeCount + 1)
+    //  setLikeCount(likeCount + 1)
     }
     else {
       deleteLike();
-      setLikeCount(likeCount - 1)
+    //  setLikeCount(likeCount - 1)
     }
   }
 
-  const checkLikes = () => {
-    var likeControl = likes.find((like => "" + like.userId === localStorage.getItem("currentUser")));
-    if (likeControl != null) {
-      setLikeId(likeControl.id);
-      setIsLiked(true);
-    } else {
-      setIsLiked(false);
-    }
-  }
+  // const checkLikes = () => {
+  //  // var likeControl = likes.find((like => "" + like.userId === localStorage.getItem("currentUser")));
+  //   if (likeControl != null) {
+  //     setLikeId(likeControl.id);
+  //     setIsLiked(true);
+  //   } else {
+  //     setIsLiked(false);
+  //   }
+  // }
 
   useEffect(() => {
     if (isInitialMount.current) isInitialMount.current = false;
     else refreshComments();
   }, [commentList])
 
-  useEffect(() => { checkLikes() }, [])
+ // useEffect(() => { checkLikes() }, [])
 
   const refreshComments = () => {
     fetch("/comments?postId=" + postId)
@@ -183,7 +183,7 @@ export default function Post(props) {
           <IconButton onClick={handleLike} aria-label="add to favorites">
             <FavoriteIcon style={isLiked ? { color: "red" } : null} />
           </IconButton>
-          {likeCount}
+         {/* {likeCount} */}
           <ExpandMore
             onClick={handleExpandClick}
             aria-expanded={expanded}

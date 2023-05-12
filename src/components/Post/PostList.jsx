@@ -6,6 +6,7 @@ const PostList = (props) => {
     const [isError, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [postList, setPostList] = useState([]);
+   
 
 
     const refreshPosts = () => {
