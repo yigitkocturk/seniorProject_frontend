@@ -21,27 +21,27 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: 800,
     textAlign: "left",
-    margin: 20
+    margin: 20,
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    paddingTop: "56.25%", // 16:9
   },
   expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
+    transform: "rotate(0deg)",
+    marginLeft: "auto",
+    transition: theme.transitions.create("transform", {
       duration: theme.transitions.duration.shortest,
     }),
   },
   avatar: {
-    background: 'linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)',
+    background: "linear-gradient(45deg, #2196F3 30%, #21CBF3 90%)",
   },
   link: {
     textDecoration: "none",
     boxShadow: "none",
-    color: "white"
-  }
+    color: "white",
+  },
 }));
 
 const ExpandMore = styled((props) => {
@@ -56,7 +56,8 @@ const ExpandMore = styled((props) => {
 }));
 
 export default function Post(props) {
-  const { title, text, userId, userName, postId, likes, date , filter} = props;
+  const { title, text, userId, userName, postId, likes, date, filter, image } =
+    props;
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
   const [error, setError] = useState(null);
@@ -64,14 +65,16 @@ export default function Post(props) {
   const [commentList, setCommentList] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
   const isInitialMount = useRef(true);
-  // const [likeCount, setLikeCount] = useState(likes.length);
+  const [likeCount, setLikeCount] = useState(likes.length);
   const [likeId, setLikeId] = useState(null);
   const [refresh, setRefresh] = useState(false);
-  let disabled = localStorage.getItem("currentUser") == null ? true:false;
+  const [imageData, setImageData] = useState(image);
+
+  let disabled = localStorage.getItem("currentUser") == null ? true : false;
 
   const setCommentRefresh = () => {
     setRefresh(true);
-  }
+  };
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -82,46 +85,49 @@ export default function Post(props) {
     setIsLiked(!isLiked);
     if (!isLiked) {
       saveLike();
-    //  setLikeCount(likeCount + 1)
-    }
-    else {
+      setLikeCount(likeCount + 1);
+    } else {
       deleteLike();
-    //  setLikeCount(likeCount - 1)
+      setLikeCount(likeCount - 1);
     }
-  }
+  };
 
-  // const checkLikes = () => {
-  //  // var likeControl = likes.find((like => "" + like.userId === localStorage.getItem("currentUser")));
-  //   if (likeControl != null) {
-  //     setLikeId(likeControl.id);
-  //     setIsLiked(true);
-  //   } else {
-  //     setIsLiked(false);
-  //   }
-  // }
+  const checkLikes = () => {
+    var likeControl = likes.find(
+      (like) => "" + like.userId === localStorage.getItem("currentUser")
+    );
+    if (likeControl != null) {
+      setLikeId(likeControl.id);
+      setIsLiked(true);
+    } else {
+      setIsLiked(false);
+    }
+  };
 
   useEffect(() => {
     if (isInitialMount.current) isInitialMount.current = false;
     else refreshComments();
-  }, [commentList])
+  }, [commentList]);
 
- // useEffect(() => { checkLikes() }, [])
+  useEffect(() => {
+    checkLikes();
+  }, []);
 
   const refreshComments = () => {
     fetch("/comments?postId=" + postId)
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(
         (result) => {
           setIsLoaded(true);
-          setCommentList(result)
+          setCommentList(result);
         },
         (error) => {
-          console.log(error)
+          console.log(error);
           setIsLoaded(true);
           setError(error);
         }
-      )
-    setRefresh(false)
+      );
+    setRefresh(false);
   };
 
   const saveLike = () => {
@@ -129,7 +135,7 @@ export default function Post(props) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": localStorage.getItem("tokenKey"),
+        Authorization: localStorage.getItem("tokenKey"),
       },
       body: JSON.stringify({
         postId: postId,
@@ -137,24 +143,22 @@ export default function Post(props) {
       }),
     })
       .then((res) => res.json())
-      .catch((err) => console.log(err)
-      );
-  }
+      .catch((err) => console.log(err));
+  };
 
   const deleteLike = () => {
     fetch("/likes/" + likeId, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": localStorage.getItem("tokenKey"),
+        Authorization: localStorage.getItem("tokenKey"),
       },
-    })
-      .catch((err) => console.log(err))
-  }
+    }).catch((err) => console.log(err));
+  };
 
   return (
     <div className="container mb-2 ">
-      <Card className="shadow-5" >
+      <Card className="shadow-5">
         <CardHeader
           avatar={
             <a className="a" href={"/users/" + userId}>
@@ -170,12 +174,22 @@ export default function Post(props) {
             </IconButton>
           }
           title={title}
-
         />
 
         <CardContent>
           <Typography variant="body2" color="text.secondary">
-            Filter = {filter}<br/><br/>
+            {image && (
+              <img
+                src={`data:image/jpeg;base64,${image}`}
+                alt="Blob Resim"
+                style={{ height: "250px", width: "250px" }}
+              />
+            )}
+            <br />
+            <br />
+            Filter = {filter}
+            <br />
+            <br />
             {text}
           </Typography>
         </CardContent>
@@ -183,7 +197,7 @@ export default function Post(props) {
           <IconButton onClick={handleLike} aria-label="add to favorites">
             <FavoriteIcon style={isLiked ? { color: "red" } : null} />
           </IconButton>
-         {/* {likeCount} */}
+          {likeCount}
           <ExpandMore
             onClick={handleExpandClick}
             aria-expanded={expanded}
@@ -194,12 +208,27 @@ export default function Post(props) {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <Container fixed className={classes.container}>
-            {error ? "error" :
-              isLoaded ? commentList.map(comment => (
-                <Comment userId={comment.userId} userName={comment.userName} text={comment.text}></Comment>
-              )) : "Loading"}
-            {disabled ? "" :
-              <CommentForm userId={localStorage.getItem("currentUser")} userName={localStorage.getItem("userName")} postId={postId} setCommentRefresh={setCommentRefresh}></CommentForm>}
+            {error
+              ? "error"
+              : isLoaded
+              ? commentList.map((comment) => (
+                  <Comment
+                    userId={comment.userId}
+                    userName={comment.userName}
+                    text={comment.text}
+                  ></Comment>
+                ))
+              : "Loading"}
+            {disabled ? (
+              ""
+            ) : (
+              <CommentForm
+                userId={localStorage.getItem("currentUser")}
+                userName={localStorage.getItem("userName")}
+                postId={postId}
+                setCommentRefresh={setCommentRefresh}
+              ></CommentForm>
+            )}
           </Container>
         </Collapse>
       </Card>

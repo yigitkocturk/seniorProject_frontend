@@ -6,6 +6,9 @@ const PostList = (props) => {
     const [isError, setError] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [postList, setPostList] = useState([]);
+    const {postId} = props;
+    const [imageData, setImageData] = useState(null);
+
    
 
 
@@ -29,6 +32,26 @@ const PostList = (props) => {
         refreshPosts()
     }, [postList])
 
+    const fetchBlobImage = () => {
+        fetch("/post?postId=" + postId)
+          .then(response => response.blob())
+          .then(blob => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              const base64data = reader.result;
+              setImageData(base64data);
+            };
+            reader.readAsDataURL(blob);
+          })
+          .catch(error => {
+            console.error('Blob resmi alınamadı:', error);
+          });
+      };
+      
+      useEffect(() => {
+        fetchBlobImage();
+      }, []);
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -50,6 +73,7 @@ const PostList = (props) => {
                     text={posts.text}
                     date={posts.date}
                     filter={posts.filter}
+                    image={posts.imageData}
                 />
             ))}
         </div>
