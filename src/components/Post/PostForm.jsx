@@ -1,19 +1,19 @@
 import React, { useState } from 'react'
 
 const PostForm = ({ userId, userName }) => {
-    const [text, setText] = useState("");
-    const [title, setTitle] = useState("");
+    const [text, setText] = useState('');
+    const [title, setTitle] = useState('');
     const [isSent, setIsSent] = useState(false);
-    const [filtre, setFiltre] = useState("");
-    const [image, setImage] = useState("")
+    const [filtre, setFiltre] = useState('');
+    const [imageFile, setImageFile] = useState(null);
 
     const handleSubmit = (e) => {
         savePost();
         setIsSent(true);
-        setTitle("");
-        setText("");
-        setFiltre("");
-        setImage("")
+        setTitle('');
+        setText('');
+        setFiltre('');
+        setImageFile(null);
     };
 
     const handleTitle = (value) => {
@@ -30,28 +30,32 @@ const PostForm = ({ userId, userName }) => {
         setFiltre(value);
     };
 
-    const handleImage = (value) => {
-        setImage(value);
+    const handleImageChange = (e) => {
+        setImageFile(e.target.files[0]);
     };
 
     const savePost = () => {
-        fetch("/posts", {
-            method: "POST",
+        const formData = new FormData();
+        formData.append('title', title);
+        formData.append('userId', userId);
+        formData.append('text', text);
+        formData.append('filter', filtre);
+        formData.append('imageFile', imageFile);
+
+        fetch('/posts', {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json",
-                "Authorization": localStorage.getItem("tokenKey"),
+                Authorization: localStorage.getItem('tokenKey'),
             },
-            body: JSON.stringify({
-                title: title,
-                userId: userId,
-                text: text,
-                filter: filtre,
-                image: image,
-            }),
+            body: formData,
         })
             .then((res) => res.json())
-            .catch((err) => console.log("error"))
-
+            .then((data) => {
+                console.log('Post oluşturuldu', data);
+            })
+            .catch((err) => {
+                console.log('Hata oluştu', err);
+            });
     };
 
     return (
@@ -72,7 +76,13 @@ const PostForm = ({ userId, userName }) => {
                         value={text}
                         onChange={(e) => handleText(e.target.value)}
                     ></input>
-                    <input type="file" className="form-control" id="customFile" style={{ width: "350px", margin: "10px" }}   value={image} onChange={(e) => handleImage(e.target.value)} />
+                    <input
+                        type="file"
+                        className="form-control"
+                        id="customFile"
+                        style={{ width: '350px', margin: '10px' }}
+                        onChange={handleImageChange}
+                    />
                     <select
                         className="form-control"
                         style={{ width: "350px", marginLeft: "10px" }}
