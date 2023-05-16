@@ -63,9 +63,9 @@ function Login() {
     }
 
     return (
-        <div style={{ backgroundColor: '#0d6efd' }}>
-            <MDBContainer style={{ width: '900px', paddingTop: '50px', paddingBottom: '70px' }}>
-                <MDBCard style={{ borderRadius: '80px' }}>
+        <div style={{ backgroundColor: '#fafafa' }}>
+            <MDBContainer style={{ width: '900px', paddingTop: '50px', paddingBottom: '70px', }}>
+                <MDBCard style={{ borderRadius: '80px', backgroundColor: '#f4f4f4'}}>
 
                     <MDBRow className='g-0 d-flex align-items-center'>
 
@@ -73,8 +73,8 @@ function Login() {
                             <MDBCardImage src={photo} alt='phone' style={{ height: '600px', borderRadius: '35px' }} fluid />
                         </MDBCol>
                         <MDBCol md='8'>
-                            <MDBCardTitle style={{ marginLeft: '200px', color: '#0d6efd', fontSize: '30px' }}>SHARE CİRCLE</MDBCardTitle>
-                            <MDBCardImage src={logo} alt='logo' className='rounded-t-5 rounded' style={{ width: '200px', height: '150px', marginLeft: '200px', marginTop: '15px' }} />
+                            <MDBCardTitle style={{ marginLeft: '200px', color: '#0d6efd', fontSize: '30px',  }}>SHARE CIRCLE</MDBCardTitle>
+                            <MDBCardImage src={logo} alt='logo'  style={{ width: '180px', height: '180px', marginLeft: '200px', marginTop: '15px',  borderRadius: '65px' }} />
                             <MDBCardBody style={{ width: '300px', marginLeft: '150px' }}>
                                 <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='username' onChange={(i) => handleUsername(i.target.value)} />
                                 <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password' onChange={(i) => handlePassword(i.target.value)} />

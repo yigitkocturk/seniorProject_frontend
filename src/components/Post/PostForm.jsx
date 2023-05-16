@@ -13,7 +13,7 @@ const PostForm = ({ userId, userName }) => {
         setTitle('');
         setText('');
         setFiltre('');
-        setImageFile(null);
+        setImageFile('');
     };
 
     const handleTitle = (value) => {
@@ -31,8 +31,10 @@ const PostForm = ({ userId, userName }) => {
     };
 
     const handleImageChange = (e) => {
-        setImageFile(e.target.files[0]);
-    };
+        const file = e.target.files[0];
+        setImageFile(file);
+      
+      };
 
     const savePost = () => {
         const formData = new FormData();
@@ -68,6 +70,7 @@ const PostForm = ({ userId, userName }) => {
                         placeholder="İçerik Başlğı"
                         value={title}
                         onChange={(e) => handleTitle(e.target.value)}
+                        style={{ width: '350px', margin: '10px' }}
                     ></input>
                     <input
                         className="form-control input"
@@ -75,6 +78,7 @@ const PostForm = ({ userId, userName }) => {
                         placeholder="İçerik Detay"
                         value={text}
                         onChange={(e) => handleText(e.target.value)}
+                        style={{ width: '350px', margin: '10px' }}
                     ></input>
                     <input
                         type="file"

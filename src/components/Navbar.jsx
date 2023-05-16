@@ -32,12 +32,8 @@ const Navbar = () => {
                    
                     <div className="dropdown">
                         <a
-                            className="text-reset me-3 dropdown-toggle hidden-arrow"
-                            href="#"
-                            id="navbarDropdownMenuLink"
-                            role="button"
-                            data-mdb-toggle="dropdown"
-                            aria-expanded="false"
+                            href='/chatrooms'
+                            style={{marginRight: '10px',}}
                         >
                             <i className="far fa-comments fa-lg" ></i>
                         </a>
