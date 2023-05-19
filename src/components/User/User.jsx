@@ -8,6 +8,7 @@ function User() {
     const [user, setUser] = useState({});
     const [loading, setLoading] = useState(true);
     const [imageData, setImageData] = useState(null);
+    const [selectedImage, setSelectedImage] = useState(null);
 
     useEffect(() => {
         fetchUser(userId);
@@ -43,26 +44,31 @@ function User() {
                 Authorization: localStorage.getItem('tokenKey'),
             },
         })
-            .then((response) => response.blob())
-            .then((blob) => {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    const base64data = reader.result;
-                    setImageData(base64data);
-                };
-                reader.readAsDataURL(blob);
+            .then((response) => response.json())  // response.blob() yerine response.json()
+            .then((data) => {
+                setImageData(data.image);
             })
             .catch((error) => {
                 console.error('Blob resmi alınamadı:', error);
             });
     };
 
-    const handleFileChange = (e) => {
-        const file = e.target.files[0];
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0];
+        setSelectedImage(file);
+    };
+
+    const uploadPhoto = () => {
+        if (!selectedImage) {
+            console.error('Lütfen yüklemek için bir fotoğraf seçin.');
+            return;
+        }
+    
         const formData = new FormData();
         formData.append('userId', userId);
-        formData.append('imageFile', file);
-
+        formData.append('imageFile', selectedImage);
+    
         fetch('/photos', {
             method: 'POST',
             headers: {
@@ -70,19 +76,24 @@ function User() {
             },
             body: formData,
         })
-            .then((res) => res.json())
-            .then(
-                (result) => {
-                    console.log(result);
-                    // İşlem tamamlandığında yapılması gerekenleri burada gerçekleştirin
-                },
-                (error) => {
-                    console.log(error);
-                    // Hata durumunda yapılması gerekenleri burada gerçekleştirin
+            .then((response) => {
+                if (response.ok) {
+                    console.log('Fotoğraf başarıyla yüklendi veya güncellendi.');
+                    // Yeniden yükleme yapmak veya başka bir işlem yapmak için gerekli adımları burada gerçekleştirin.
+                    return response.json(); // Return the response as JSON
+                } else {
+                    throw new Error('Fotoğraf yükleme hatası: ' + response.status);
                 }
-            );
+            })
+            .then((data) => {
+                // Update the imageData state with the newly uploaded image
+                setImageData(data.image);
+            })
+            .catch((error) => {
+                console.error('Fotoğraf yükleme hatası:', error);
+            });
     };
-
+    
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -96,65 +107,35 @@ function User() {
                         <form className="file-upload">
                             <div className="row mb-5 gx-5">
                                 <div>
-                                    <div className="bg-secondary-soft px-4 py-5 rounded">
-                                        <div className="row g-3">
-                                            <div className="bg-secondary d-lg-inline-block pt-3 pb-1 rounded">
-                                                <h4 className="h4 text-white mb-0">
-                                                    <p style={{ paddingLeft: '30px' }}>Upload your profile photo.</p>
-                                                </h4>
-                                            </div>
-                                            <div className="text-center">
-                                                <div className="square position-relative display-2 mb-3">
-                                                    {imageData && (
-                                                        <img
-                                                        src={`data:image/jpeg;base64,${imageData}`}
-                                                            alt="Profile Photo"
-                                                            style={{ height: '250px', width: '250px' }}
-                                                        />
-                                                    )}
-                                                </div>
-                                                <input type="file" id="customFile" name="file" hidden="" onChange={handleFileChange} />
-                                                <label htmlFor="customFile" className="btn btn-success-soft">
-                                                    Upload
-                                                </label>
-                                            </div>
-                                        </div>
+                                    <div className="bg-secondary-soft px-4 py-5 rounded-lg text-center">
+                                        {imageData && (
+                                            <img
+                                                src={`data:image/jpeg;base64,${imageData}`}  // src özelliği düzeltildi
+                                                alt="Profile Photo"
+                                                style={{ height: '250px', width: '250px' }}
+                                            />
+
+                                        )}
+                                        {!imageData && <div>Fotoğraf yok</div>}
                                     </div>
                                 </div>
-                                <div className="mb-5 mb-xxl-0">
-                                    <div className="bg-secondary-soft px-4 py-5 rounded">
-                                        <div className="row g-3">
-                                            <div className="bg-secondary d-lg-inline-block py-1-9 px-1-9 px-sm-6 mb-1-9 rounded">
-                                                <h3 className="h3 text-white mb-0 ">
-                                                    {user.name} {user.surname}
-                                                </h3>
-                                            </div>
-                                            <ul className="list-unstyled mb-1-9">
-                                                <li className="mb-2 mb-xl-3 display-28">
-                                                    <span className="display-26 text-secondary me-2">Name:</span>
-                                                    {user.name}
-                                                </li>
-                                                <li className="mb-2 mb-xl-3 display-28">
-                                                    <span className="display-26 text-secondary me-2">Surname:</span>
-                                                    {user.surname}
-                                                </li>
-                                                <li className="mb-2 mb-xl-3 display-28">
-                                                    <span className="display-26 text-secondary me-2">Email:</span>
-                                                    {user.email}
-                                                </li>
-                                                <li className="mb-2 mb-xl-3 display-28">
-                                                    <span className="display-26 text-secondary me-2">Username:</span>
-                                                    {user.userName}
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div className="row mb-4 gx-5">
+                                <div className="col">
+                                    <input type="file" className="form-control" onChange={handleFileChange} />
+                                </div>
+                            </div>
+                            <div className="row mb-4 gx-5">
+                                <div className="col">
+                                    <button type="button" className="btn btn-primary" onClick={uploadPhoto}>
+                                        Fotoğraf Yükle
+                                    </button>
                                 </div>
                             </div>
                         </form>
                     </div>
                     <div className="col-8 mt-5">
-                        <UserActivity />
+                        <UserActivity user={user} />
                     </div>
                 </div>
             </div>
