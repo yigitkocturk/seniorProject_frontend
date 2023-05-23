@@ -1,12 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Container, Card, Button } from "react-bootstrap";
 import { styled } from "@mui/material/styles";
-import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import CommentIcon from "@mui/icons-material/Comment";
 import "../../App.css";
 import Comment from "../Comment/Comment";

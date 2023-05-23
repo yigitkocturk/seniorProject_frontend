@@ -76,48 +76,14 @@ function User() {
         formData.append('userId', userId);
         formData.append('imageFile', selectedImage);
 
-        fetch(`/photos?userId=${userId}`, {
-            method: 'DELETE',
-            headers: {
-                Authorization: localStorage.getItem('tokenKey'),
-            },
-        })
-            .then((response) => {
-                if (response.ok) {
-                    console.log('Eski fotoğraf başarıyla silindi.');
-
-                    // En büyük ID'ye sahip fotoğrafı getirme isteği
-                    return fetch(`/photos/max/${userId}`, {
-                        method: 'GET',
-                        headers: {
-                            Authorization: localStorage.getItem('tokenKey'),
-                        },
-                    });
-                } else {
-                    throw new Error('Fotoğraf silme hatası: ' + response.status);
-                }
-            })
-            .then((response) => {
-                if (response.ok) {
-                    console.log('En büyük ID\'ye sahip fotoğraf alındı.');
-                    return response.json();
-                } else {
-                    throw new Error('Fotoğraf getirme hatası: ' + response.status);
-                }
-            })
-            .then((data) => {
-                // Update the imageData state with the newly fetched image
-                setImageData(data.image);
-
-                // Yeni resmi yükleme işlemine devam et
-                return fetch('/photos', {
+        
+             fetch('/photos', {
                     method: 'POST',
                     headers: {
                         Authorization: localStorage.getItem('tokenKey'),
                     },
                     body: formData,
-                });
-            })
+                })
             .then((response) => {
                 if (response.ok) {
                     console.log('Fotoğraf başarıyla yüklendi veya güncellendi.');
