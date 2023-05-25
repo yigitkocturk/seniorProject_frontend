@@ -141,10 +141,8 @@ function User() {
     return (
         <div>
             <Navbar />
-            <div className="container">
+            <div className="container" >
                 <div className="main-body">
-                    <div className="row">
-                        <div className="col-lg-4">
                             <div className="card">
                                 <div className="card-body">
                                     <div className="d-flex flex-column align-items-center text-center">
@@ -152,14 +150,14 @@ function User() {
                                             <img
                                                 src={`data:image/jpeg;base64,${imageData}`}
                                                 alt="Profile Photo"
-                                                style={{ height: '165px', width: '180px' }}
+                                                style={{ height: '145px', width: '180px' }}
                                             />
                                         )}
                                         {!imageData && <div>Fotoğraf yok</div>}
                                         <div className="mt-3">
                                             <h4>{user.userName}</h4>
-                                            <input type="file" className="form-control" onChange={handleFileChange} />
-                                            <button type="button" className="btn btn-primary" onClick={uploadPhoto}>
+                                            <input type="file" className="form-control" onChange={handleFileChange} style={{marginTop: '10px'}} />
+                                            <button type="button" className="btn btn-primary" onClick={uploadPhoto} style={{marginTop: '10px'}}>
                                                 Fotoğraf Yükle
                                             </button>
                                         </div>
@@ -167,7 +165,7 @@ function User() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-lg-8">
+                        <div >
                             <div className="card">
                                 <div className="card-body">
                                     <form onSubmit={handleFormSubmit}>
@@ -184,7 +182,7 @@ function User() {
                                                     onChange={handleInputChange}
                                                 />
                                             </div>
-                                        </div>
+                                        </div> 
                                         <div className="row mb-3">
                                             <div className="col-sm-3">
                                                 <h6 className="mb-0">Surname</h6>
@@ -198,7 +196,7 @@ function User() {
                                                     onChange={handleInputChange}
                                                 />
                                             </div>
-                                        </div>
+                                        </div> 
                                         <div className="row mb-3">
                                             <div className="col-sm-3">
                                                 <h6 className="mb-0">Username</h6>
@@ -212,7 +210,7 @@ function User() {
                                                     onChange={handleInputChange}
                                                 />
                                             </div>
-                                        </div>
+                                        </div> 
                                         <div className="row mb-3">
                                             <div className="col-sm-3">
                                                 <h6 className="mb-0">Email</h6>
@@ -240,10 +238,7 @@ function User() {
                             </div>
                         </div>
                     </div>
-                    <UserActivity userId={userId} />
                 </div>
-            </div>
-        </div>
     );
 }
 

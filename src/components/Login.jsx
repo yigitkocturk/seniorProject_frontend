@@ -73,7 +73,7 @@ function Login() {
                             <MDBCardImage src={photo} alt='phone' style={{ height: '600px', borderRadius: '35px' }} fluid />
                         </MDBCol>
                         <MDBCol md='8'>
-                            <MDBCardTitle style={{ marginLeft: '200px', color: '#0d6efd', fontSize: '30px',  }}>SHARE CIRCLE</MDBCardTitle>
+                            <MDBCardTitle style={{ marginLeft: '195px', color: '#0d6efd', fontSize: '35px', fontFamily: 'Fantasy'  }}>SHARE CIRCLE</MDBCardTitle>
                             <MDBCardImage src={logo} alt='logo'  style={{ width: '180px', height: '180px', marginLeft: '200px', marginTop: '15px',  borderRadius: '65px' }} />
                             <MDBCardBody style={{ width: '300px', marginLeft: '150px' }}>
                                 <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='username' onChange={(i) => handleUsername(i.target.value)} />

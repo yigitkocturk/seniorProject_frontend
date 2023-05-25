@@ -1,3 +1,7 @@
+body {
+  background-color: #fff;
+}
+
 .input{
   margin: 10px;
   width: 350px;
@@ -43,4 +47,13 @@
   appearance: none;
   border-radius: 0.375rem;
   transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+::-webkit-scrollbar {
+  background-color: #fff;
+  width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #fff;
 }

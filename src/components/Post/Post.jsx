@@ -158,18 +158,19 @@ export default function Post(props) {
   };
 
   return (
-    <div className="container mb-2">
+    <div className="card ">
       <Card className="shadow-5">
         <Card.Header className="text-center">
           <div className="d-flex align-items-center">
-            <a className="a" href={"/users/" + userId}>
+            <a className="a" >
               <img
                 src={`data:image/jpeg;base64,${imageData2}`}
                 alt="User Profile"
                 className="mr-2 rounded-circle"
                 style={{ height: '40px', width: '40px' }}
               />
-              <span className="font-weight-bold ml-2">{userName}</span>
+              <a className="a" href={"/users/"}><span className="font-weight-bold " style={{paddingLeft: '10px', fontSize: '15px', color: 'black'}}>{userName}</span></a>
+              <span className="font-weight-bold" style={{ fontSize: '15px', paddingLeft: '550px'}}>Filter:</span> {filter}
             </a>
           </div>
           <h5 className="mb-0">{title}</h5>
@@ -177,9 +178,6 @@ export default function Post(props) {
 
         <Card.Img variant="top" src={`data:image/jpeg;base64,${image}`} style={{ maxHeight: "350px" }} />
         <Card.Body>
-          <Card.Text className="mb-0">
-            <span className="font-weight-bold">Filter:</span> {filter}
-          </Card.Text>
           <Card.Text>{text}</Card.Text>
         </Card.Body>
         <Card.Footer>
