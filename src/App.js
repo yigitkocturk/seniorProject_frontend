@@ -3,8 +3,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import User from './components/User/User';
-import ChatRoom from './components/chatrooms/Chatrooms';
+import ChatRoom from './components/chatrooms/Client';
 import UserView from './components/User/UserView';
 
 

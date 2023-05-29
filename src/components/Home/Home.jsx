@@ -3,6 +3,7 @@ import PostList from '../Post/PostList';
 import PostForm from '../Post/PostForm';
 import Navbar from '../Navbar';
 import FiltrelemeEkrani from '../Filtre';
+import Client from '../chatrooms/Client';
 
 const Home = () => {
   const [filter, setFilter] = useState('');
@@ -23,6 +24,7 @@ const Home = () => {
             <div style={{ position: 'sticky', top: '20px' }}>
               <PostForm userId={localStorage.getItem("currentUser")} userName={localStorage.getItem("userName")} />
             </div>
+            <div><Client></Client></div>
           </div>
         </div>
       </div>
