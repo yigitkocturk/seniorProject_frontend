@@ -47,6 +47,10 @@ const Client = () => {
         setUsers(users);
       });
 
+      socket.on("messages", (messages) => {
+        setMessages(messages);
+      });
+
       socket.on("message", (message) => {
         setMessages((messages) => [...messages, message]);
       });
@@ -67,7 +71,7 @@ const Client = () => {
     event.preventDefault();
     if (socket && message) {
       socket.emit("send", message);
-      setMessage(""); // Mesaj gönderildikten sonra mesaj alanını temizler
+      setMessage("");
     }
   };
 
@@ -76,10 +80,11 @@ const Client = () => {
       <div className="chat-container">
         <div className="chat-header">General Chat</div>
         <div className="chat-messages">
-          {messages.map(({ user, text }, index) => (
+          {messages.map(({ user, text, date }, index) => (
             <div key={index} className="row mb-2">
               <div className="col-md-3">{user.name}</div>
               <div className="col-md-2">{text}</div>
+              {/* <div className="col-md-2">{moment(date).format("YYYY-MM-DD HH:mm:ss")}</div> */}
             </div>
           ))}
         </div>
@@ -87,12 +92,12 @@ const Client = () => {
           <input
             type="text"
             className="form-control"
-            placeholder="Mesajınızı girin"
-            value={message} // input alanına değer atanması
-            onChange={(e) => setMessage(e.target.value)} // değerin güncellenmesi
+            placeholder="Enter your message"
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
           />
           <button className="btn btn-primary" id="submit" type="submit" onClick={submit}>
-            Gönder
+            Send
           </button>
         </div>
       </div>
