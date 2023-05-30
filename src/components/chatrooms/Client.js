@@ -5,15 +5,24 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./Chat.css";
 
 const Client = () => {
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(localStorage.getItem("userName") || "");
   const [socket, setSocket] = useState(null);
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    setUsername(prompt("What is your username?"));
-  }, []);
+    if (!username) {
+      const storedUsername = localStorage.getItem("username");
+      if (storedUsername) {
+        setUsername(storedUsername);
+      } else {
+        const newUsername = prompt("What is your username?");
+        setUsername(newUsername);
+        localStorage.setItem("username", newUsername);
+      }
+    }
+  }, [username]);
 
   useEffect(() => {
     if (username) {
@@ -58,59 +67,33 @@ const Client = () => {
     event.preventDefault();
     if (socket && message) {
       socket.emit("send", message);
-      setMessage("");
+      setMessage(""); // Mesaj gönderildikten sonra mesaj alanını temizler
     }
   };
 
   return (
     <div className="container">
-      <div className="row">
-        <div className="col-md-12 mt-4 mb-4">
-          <h6>Hello {username}</h6>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-md-8">
-          <h6>Messages</h6>
-          <div id="messages">
-            {messages.map(({ user, date, text }, index) => (
-              <div key={index} className="row mb-2">
-                <div className="col-md-3">
-                  {moment(date).format("h:mm:ss a")}
-                </div>
-                <div className="col-md-2">{user.name}</div>
-                <div className="col-md-2">{text}</div>
-              </div>
-            ))}
-          </div>
-          <form onSubmit={submit} id="form">
-            <div className="input-group">
-              <input
-                type="text"
-                className="form-control"
-                onChange={(e) => setMessage(e.currentTarget.value)}
-                value={message}
-                id="text"
-              />
-              <span className="input-group-btn">
-                <button
-                  id="submit"
-                  type="submit"
-                  className="btn btn-primary"
-                >
-                  Send
-                </button>
-              </span>
+      <div className="chat-container">
+        <div className="chat-header">General Chat</div>
+        <div className="chat-messages">
+          {messages.map(({ user, text }, index) => (
+            <div key={index} className="row mb-2">
+              <div className="col-md-3">{user.name}</div>
+              <div className="col-md-2">{text}</div>
             </div>
-          </form>
+          ))}
         </div>
-        <div className="col-md-4">
-          <h6>Users</h6>
-          <ul id="users">
-            {users.map(({ name, id }) => (
-              <li key={id}>{name}</li>
-            ))}
-          </ul>
+        <div className="chat-input">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Mesajınızı girin"
+            value={message} // input alanına değer atanması
+            onChange={(e) => setMessage(e.target.value)} // değerin güncellenmesi
+          />
+          <button className="btn btn-primary" id="submit" type="submit" onClick={submit}>
+            Gönder
+          </button>
         </div>
       </div>
     </div>

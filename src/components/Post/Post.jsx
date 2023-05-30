@@ -156,7 +156,7 @@ export default function Post(props) {
       },
     }).catch((err) => console.log(err));
   };
-
+//  {moment(date).format("h:mm:ss a")}
   return (
     <div className="card ">
       <Card className="shadow-5">

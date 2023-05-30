@@ -1,14 +1,39 @@
-#messages {
-    height: 200px;
-    background-color: #eee;
-    font-size: 12px;
-    padding: 20px;
+.chat-container {
+    min-height: 300px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    height: calc(100vh - 480px); /* Ekrandaki diğer bileşenlerin yüksekliği çıkarıldı */
   }
   
-  input {
-    width: 100%;
+  .chat-messages {
+    flex-grow: 1;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+    padding: 10px;
+    overflow-y: scroll;
+    max-height: calc(100% - 60px); /* Chat başlığı ve giriş alanının yüksekliği çıkarıldı */
   }
   
-  #submit {
-    width: 100%;
+  .chat-header {
+    background-color: #f5f5f5;
+    padding: 10px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  .chat-input {
+    display: flex;
+    margin-top: 10px; /* Giriş alanının üst boşluğu ayarlandı */
+  }
+  
+  .chat-input input {
+    flex-grow: 1;
+    margin-right: 10px;
+  }
+  
+  .chat-input button {
+    width: 80px;
   }

@@ -3,7 +3,7 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Signup from './components/Signup';
 import Login from './components/Login';
-import ChatRoom from './components/chatrooms/Client';
+//import ChatRoom from './components/chatrooms/Chatroom';
 import UserView from './components/User/UserView';
 
 
@@ -17,7 +17,7 @@ function App() {
         <Route exact path='/auth' element={<Signup />}></Route>
         <Route exact path="/users" element={<UserView  />}></Route>
         <Route path="/login" element={localStorage.getItem("currentUser") != null ? <Navigate to="/" /> : <Login />}></Route>
-        <Route exact path="/chatrooms" element={<ChatRoom  />}></Route>
+        {/* <Route exact path="/chatrooms" element={<ChatRoom  />}></Route> */}
       </Routes>
     </div>
   );

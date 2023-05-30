@@ -11,22 +11,32 @@ const Home = () => {
   const handleFilterChange = (name) => {
     setFilter(name);
   };
+
   return (
-    <div className='container' style={{backgroundColor: '#fff'}}>
+    <div className='container-fluid' style={{ backgroundColor: '#fff', height: '100vh' }}>
       <Navbar></Navbar>
-      <div className='mt-4'>
-        <div className="row">
-          <div className="col-md-8 col-sm-12 mt-5" style={{ overflowY: 'scroll', height: '600px', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <FiltrelemeEkrani handleFilterChange={handleFilterChange} />
-            <PostList filter={filter} />
-          </div>
-          <div className="col-md-4 col-sm-12 mt-5">
-            <div style={{ position: 'sticky', top: '20px' }}>
-              <PostForm userId={localStorage.getItem("currentUser")} userName={localStorage.getItem("userName")} />
+      <div className='row' style={{ height: 'calc(100vh - 56px)' }}>
+        <div className='col-md-8  mt-5' style={{ overflowY: 'scroll', scrollbarWidth: 'none', msOverflowStyle: 'none', height: '100%' }}>
+          <div className='container'>
+            <div className='row'>
+              <div className='col-12 mt-4'>
+                <FiltrelemeEkrani handleFilterChange={handleFilterChange} />
+              </div>
+              <div className='col-12'>
+                <PostList filter={filter} />
+              </div>
             </div>
-            <div><Client></Client></div>
           </div>
         </div>
+        <div className='col-md-4  mt-4' style={{ position: 'sticky', bottom: '0', overflowY: 'auto', paddingTop: '15px', marginLeft: '-15px', marginRight: '-15px' }}>
+          <div style={{ position: 'sticky', display: 'flex', flexDirection: 'column' }}>
+            <PostForm userId={localStorage.getItem("currentUser")} userName={localStorage.getItem("userName")} />
+            <div>
+              <Client></Client>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   );
