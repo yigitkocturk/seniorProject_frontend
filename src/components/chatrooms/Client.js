@@ -10,6 +10,7 @@ const Client = () => {
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [selectedRoom, setSelectedRoom] = useState("General"); // Yeni satır: Seçilen odayı tutmak için bir state ekledik
 
   useEffect(() => {
     if (!username) {
@@ -69,9 +70,10 @@ const Client = () => {
 
   const submit = (event) => {
     event.preventDefault();
-    if (socket && message) {
-      socket.emit("send", message);
+    if (socket && message && selectedRoom) {
+      socket.emit("send", { message, room: selectedRoom });
       setMessage("");
+      setMessages((messages) => [...messages.reverse(), { user: { name: username }, text: message, date: moment().toISOString(), room: selectedRoom }].reverse());
     }
   };
 
@@ -80,13 +82,17 @@ const Client = () => {
       <div className="chat-container">
         <div className="chat-header">General Chat</div>
         <div className="chat-messages">
-          {messages.map(({ user, text, date }, index) => (
-            <div key={index} className="row mb-2">
-              <div className="col-md-3">{user.name}</div>
-              <div className="col-md-2">{text}</div>
-              {/* <div className="col-md-2">{moment(date).format("YYYY-MM-DD HH:mm:ss")}</div> */}
-            </div>
-          ))}
+          {[...messages]
+            .filter((msg) => msg.room === selectedRoom)
+            .reverse()
+            .map(({ user, text, date }, index, array) => (
+              <div key={index} className="row mb-2">
+                <div className="col-md-3">{user.name}</div>
+                <div className="col-md-2">{text}</div>
+                {/* <div className="col-md-2">{moment(date).format("YYYY-MM-DD HH:mm:ss")}</div> */}
+              </div>
+            ))
+          }
         </div>
         <div className="chat-input">
           <input

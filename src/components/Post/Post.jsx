@@ -170,14 +170,14 @@ export default function Post(props) {
                 style={{ height: '40px', width: '40px' }}
               />
               <a className="a" href={"/users/"}><span className="font-weight-bold " style={{paddingLeft: '10px', fontSize: '15px', color: 'black'}}>{userName}</span></a>
-              <span className="font-weight-bold" style={{ fontSize: '15px', paddingLeft: '550px'}}>Filter:</span> {filter}
             </a>
           </div>
-          <h5 className="mb-0">{title}</h5>
+          
         </Card.Header>
 
         <Card.Img variant="top" src={`data:image/jpeg;base64,${image}`} style={{ maxHeight: "350px" }} />
         <Card.Body>
+        <h5 className="mb-0">{title}</h5>
           <Card.Text>{text}</Card.Text>
         </Card.Body>
         <Card.Footer>

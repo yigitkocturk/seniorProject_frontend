@@ -26,6 +26,7 @@ connection.connect((error) => {
 });
 
 const users = {};
+const rooms = ["General", "Oda1", "Oda2", "Oda3"]; // Yeni satır: Odaları tutmak için bir dizi ekledik
 
 io.on("connection", (socket) => {
   socket.on("username", (username) => {
@@ -36,6 +37,7 @@ io.on("connection", (socket) => {
     users[socket.id] = user;
     io.emit("connected", user);
     io.emit("users", Object.values(users));
+    io.emit("rooms", rooms); // Yeni satır: Odaları istemciye gönder
 
     connection.query('SELECT * FROM messages ORDER BY id DESC', (error, results, fields) => {
       if (error) {
@@ -48,16 +50,22 @@ io.on("connection", (socket) => {
             name: row.username,
             id: row.userid,
           },
+          room: row.room // Yeni satır: Mesajlara ait oda bilgisini al
         }));
         socket.emit("messages", messagesFromDB);
       }
     });
   });
 
-  socket.on("send", (message) => {
+  socket.on("joinRoom", (room) => { // Yeni satır: Odaya katılma isteğini işle
+    socket.join(room);
+  });
+
+  socket.on("send", ({ message, room }) => { // Yeni satır: Mesajı odaya gönder
     const newMessage = {
       username: users[socket.id].name,
       message: message,
+      room: room // Yeni satır: Mesaja ait oda bilgisini ekle
     };
 
     connection.query('INSERT INTO messages SET ?', newMessage, (error, results, fields) => {
@@ -68,10 +76,11 @@ io.on("connection", (socket) => {
       }
     });
 
-    io.emit("message", {
+    io.to(room).emit("message", { // Yeni satır: Mesajı sadece ilgili odaya gönder
       text: message,
       date: new Date().toISOString(),
       user: users[socket.id],
+      room: room // Yeni satır: Mesaja ait oda bilgisini ekle
     });
   });
 
