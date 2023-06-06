@@ -12,18 +12,6 @@ const ChatPage = () => {
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState("General");
 
-  useEffect(() => {
-    if (!username) {
-      const storedUsername = localStorage.getItem("username");
-      if (storedUsername) {
-        setUsername(storedUsername);
-      } else {
-        const newUsername = prompt("What is your username?");
-        setUsername(newUsername);
-        localStorage.setItem("username", newUsername);
-      }
-    }
-  }, [username]);
 
   useEffect(() => {
     if (username) {

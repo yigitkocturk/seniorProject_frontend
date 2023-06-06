@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Container, Card, Button } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import { styled } from "@mui/material/styles";
 import Collapse from "@mui/material/Collapse";
 import IconButton from "@mui/material/IconButton";
@@ -7,23 +7,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import "../../App.css";
 import Comment from "../Comment/Comment";
-import { makeStyles } from "tss-react/mui";
 import CommentForm from "../Comment/CommentForm";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: 800,
-    textAlign: "left",
-    margin: 20,
-  },
-  expand: {
-    transform: "rotate(0deg)",
-    marginLeft: "auto",
-    transition: theme.transitions.create("transform", {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-}));
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -36,26 +20,17 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-export default function Post(props) {
+const Post = (props) => {
   const { title, text, userId, userName, postId, likes, date, filter, image } =
     props;
-  const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
-  const [error, setError] = useState(null);
-  const [isLoaded, setIsLoaded] = useState(false);
   const [commentList, setCommentList] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
-  const isInitialMount = useRef(true);
   const [likeCount, setLikeCount] = useState(likes.length);
   const [likeId, setLikeId] = useState(null);
-  const [refresh, setRefresh] = useState(false);
-  const [imageData2, setImageData2] = useState(image);
+  const [imageData, setImageData] = useState("");
 
-  let disabled = localStorage.getItem("currentUser") == null ? true : false;
-
-  const setCommentRefresh = () => {
-    setRefresh(true);
-  };
+  const isInitialMount = useRef(true);
 
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -74,10 +49,10 @@ export default function Post(props) {
   };
 
   const checkLikes = () => {
-    var likeControl = likes.find(
-      (like) => "" + like.userId === localStorage.getItem("currentUser")
+    const likeControl = likes.find(
+      (like) => like.userId === localStorage.getItem("currentUser")
     );
-    if (likeControl != null) {
+    if (likeControl) {
       setLikeId(likeControl.id);
       setIsLiked(true);
     } else {
@@ -86,49 +61,27 @@ export default function Post(props) {
   };
 
   useEffect(() => {
-    if (isInitialMount.current) isInitialMount.current = false;
-    else refreshComments();
+    if (!isInitialMount.current) {
+      refreshComments();
+    }
+    isInitialMount.current = false;
   }, [commentList]);
-
-  const fetchBlobImage = (userId) => {
-    fetch(`/photos?userId=${userId}`, {
-      method: 'GET',
-      headers: {
-        Authorization: localStorage.getItem('tokenKey'),
-      },
-    })
-      .then((response) => response.json())  // response.blob() yerine response.json()
-      .then((data) => {
-        setImageData2(data.image);
-      })
-      .catch((error) => {
-        console.error('Blob resmi alınamadı:', error);
-      });
-  };
-
-  useEffect(() => {
-    fetchBlobImage(userId);
-  }, [userId]);
 
   useEffect(() => {
     checkLikes();
   }, []);
 
   const refreshComments = () => {
-    fetch("/comments?postId=" + postId)
+    fetch(`/comments?postId=${postId}`)
       .then((res) => res.json())
       .then(
         (result) => {
-          setIsLoaded(true);
           setCommentList(result);
         },
         (error) => {
           console.log(error);
-          setIsLoaded(true);
-          setError(error);
         }
       );
-    setRefresh(false);
   };
 
   const saveLike = () => {
@@ -148,7 +101,7 @@ export default function Post(props) {
   };
 
   const deleteLike = () => {
-    fetch("/likes/" + likeId, {
+    fetch(`/likes/${likeId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -156,31 +109,73 @@ export default function Post(props) {
       },
     }).catch((err) => console.log(err));
   };
-//  {moment(date).format("h:mm:ss a")}
+
+  useEffect(() => {
+    fetch(`/photos?userId=${userId}`, {
+      method: "GET",
+      headers: {
+        Authorization: localStorage.getItem("tokenKey"),
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setImageData(data.image);
+      })
+      .catch((error) => {
+        console.error("Blob resmi alınamadı:", error);
+      });
+  }, [userId]);
   return (
-    <div className="card ">
+    <div className="card " style={{backgroundColor: '#e0efed'}}>
       <Card className="shadow-5">
-        <Card.Header className="text-center">
+        <Card.Header className="text-center" style={{backgroundColor: '#e0efed'}}>
           <div className="d-flex align-items-center">
-            <a className="a" >
-              <img
-                src={`data:image/jpeg;base64,${imageData2}`}
-                alt="User Profile"
-                className="mr-2 rounded-circle"
-                style={{ height: '40px', width: '40px' }}
-              />
-              <a className="a" href={"/users/"}><span className="font-weight-bold " style={{paddingLeft: '10px', fontSize: '15px', color: 'black'}}>{userName}</span></a>
+            <a className="a">
+              {imageData && (
+                <img
+                  src={`data:image/jpeg;base64,${imageData}`}
+                  alt="User Profile"
+                  className="mr-2 rounded-circle"
+                  style={{ height: "40px", width: "40px" }}
+                />
+              )}
+
+              <a className="a" href={"/users/"}>
+                <span
+                  className="font-weight-bold"
+                  style={{
+                    paddingLeft: "10px",
+                    fontSize: "15px",
+                    color: "black",
+                  }}
+                >
+                  {userName}
+                </span>
+              </a>
             </a>
           </div>
-          
         </Card.Header>
 
-        <Card.Img variant="top" src={`data:image/jpeg;base64,${image}`} style={{ maxHeight: "350px" }} />
-        <Card.Body>
-        <h5 className="mb-0">{title}</h5>
+        <div className="aspect-ratio-container" >
+          <div className="aspect-ratio-content">
+            <Card.Img
+              variant="top"
+              src={`data:image/jpeg;base64,${image}`}
+              className="max-height-image"
+              style={{
+                border: "2px solid #ccc", // Çerçeve rengi
+                boxShadow: "0 0 10px rgba(0, 0, 0, 0.2)", // Gölge stil ve rengi
+                backgroundColor: '#fafafa'
+              }}
+            />
+          </div>
+        </div>
+        <Card.Body >
+          <h5 className="mb-0">{title}</h5>
           <Card.Text>{text}</Card.Text>
         </Card.Body>
-        <Card.Footer>
+
+        <Card.Footer style={{backgroundColor: '#edfaf8'}}>
           <div className="d-flex justify-content-between align-items-center">
             <div>
               <Button
@@ -200,34 +195,31 @@ export default function Post(props) {
               <CommentIcon />
             </ExpandMore>
           </div>
+
           <Collapse in={expanded} timeout="auto" unmountOnExit>
-            <Container>
-              {error
-                ? "error"
-                : isLoaded
-                  ? commentList.map((comment) => (
+            <div className="container">
+              {commentList.length > 0
+                ? commentList.map((comment) => (
                     <Comment
                       key={comment.id}
                       userId={comment.userId}
                       userName={comment.userName}
                       text={comment.text}
-                    ></Comment>
+                    />
                   ))
-                  : "Loading"}
-              {disabled ? (
-                ""
-              ) : (
-                <CommentForm
-                  userId={localStorage.getItem("currentUser")}
-                  userName={localStorage.getItem("userName")}
-                  postId={postId}
-                  setCommentRefresh={setCommentRefresh}
-                ></CommentForm>
-              )}
-            </Container>
+                : null}
+              <CommentForm
+                userId={localStorage.getItem("currentUser")}
+                userName={localStorage.getItem("userName")}
+                postId={postId}
+                setCommentRefresh={refreshComments}
+              />
+            </div>
           </Collapse>
         </Card.Footer>
       </Card>
     </div>
   );
-}
+};
+
+export default Post;

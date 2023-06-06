@@ -2,31 +2,34 @@ import React, { useRef, useState } from "react";
 import alkol from './images/alcohol.png';
 import bagımlılık from './images/all.webp';
 import sigara from './images/sigara.jpg';
-import drugs from './images/drgs.webp';
 import teknoloji from './images/tek.png';
 import kumar from './images/kumar.png';
+import alısveris from './images/alışveris.png'
+import kafein from './images/kafein1.jpg'
+import yeme from './images/yeme.png'
+import iliski from './images/iliski.png'
+import eroin from './images/eroin.png'
+import kokain from './images/cocaine.jpg'
+import esrar from './images/esrar.png'
 
 const FiltrelemeEkrani = ({ handleFilterChange }) => {
-
   const storyListRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const stories = [
-    { id: 1, value: '', name: "All Posts", image: bagımlılık },
-    { id: 2, value: 'Alcohol', name: "Alcohol", image: alkol },
-    { id: 3, value: 'Smoking', name: "Smoking", image: sigara },
-    { id: 4, value: 'Drugs', name: "Drugs", image: drugs },
-    { id: 5, value: 'Technology', name: "Technology", image: teknoloji },
-    { id: 6, value: 'Gambling', name: "Gambling", image: kumar },
-    { id: 21, value: 'Alcohol', name: "Alcohol", image: alkol },
-    { id: 31, value: 'Smoking', name: "Smoking", image: sigara },
-    { id: 41, value: 'Drugs', name: "Drugs", image: drugs },
-    { id: 51, value: 'Technology', name: "Technology", image: teknoloji },
-    { id: 23, value: 'Alcohol', name: "Alcohol", image: alkol },
-    { id: 33, value: 'Smoking', name: "Smoking", image: sigara },
-    { id: 43, value: 'Drugs', name: "Drugs", image: drugs },
-    { id: 53, value: 'Technology', name: "Technology", image: teknoloji },
+    { id: 1, value: '', name: "Hepsi", image: bagımlılık },
+    { id: 2, value: 'Alkol', name: "Alkol", image: alkol },
+    { id: 3, value: 'Sigara', name: "Sigara", image: sigara },
+    { id: 4, value: 'Kumar', name: "Kumar", image: kumar },
+    { id: 5, value: 'Teknoloji', name: "Teknoloji", image: teknoloji },
+    { id: 6, value: 'Alışveriş', name: "Alışveriş", image: alısveris },
+    { id: 21, value: 'Kafein', name: "Kafein", image: kafein },
+    { id: 31, value: 'Yeme', name: "Yeme", image: yeme },
+    { id: 41, value: 'İlişki', name: "İlişki", image: iliski },
+    { id: 51, value: 'Eroin', name: "Eroin", image: eroin },
+    { id: 23, value: 'Kokain', name: "Kokain", image: kokain },
+    { id: 33, value: 'Esrar', name: "Esrar", image: esrar },
   ];
 
   const handleClick = (value) => {
@@ -51,16 +54,13 @@ const FiltrelemeEkrani = ({ handleFilterChange }) => {
     storyListRef.current.scrollLeft = scrollLeft - dragDistance;
   };
 
-  
-
   return (
-    
-      <div className="card " style={{background: '#f8f9fa'}}>
+    <div className="card" style={{ background: "#e0efed" }}>
       <div
         style={{
           display: "flex",
           overflowX: "hidden",
-          position: "relative"
+          position: "relative",
         }}
         ref={storyListRef}
         onMouseDown={handleMouseDown}
@@ -75,21 +75,50 @@ const FiltrelemeEkrani = ({ handleFilterChange }) => {
               margin: "10px",
               display: "flex",
               flexDirection: "column",
-              alignItems: "center"
+              alignItems: "center",
+            
             }}
           >
-            <img
-              src={story.image}
-              alt={story.name}
-              style={{ borderRadius: "50%", width: "60px", height: "55px", objectFit: 'orginal', cursor: 'pointer' }}
-              onClick={() => handleClick(story.value)}
-            />
+            <div
+              style={{
+                width: "75px",
+                height: "75px",
+                borderRadius: "50%",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                border: "2px solid #ccc", /* Updated border color to gray (#ccc) */
+              }}
+            >
+              <div
+                style={{
+                  width: "60px",
+                  height: "55px",
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  border: "2px solid #fff", /* Added white border to create a frame effect */
+                }}
+              >
+                <img
+                  src={story.image}
+                  alt={story.name}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    cursor: "pointer",
+                    backgroundColor: '#fff'
+                  }}
+                  onClick={() => handleClick(story.value)}
+                />
+              </div>
+            </div>
             <p style={{ marginTop: "5px" }}>{story.name}</p>
           </div>
         ))}
       </div>
     </div>
   );
-}
+};
 
 export default FiltrelemeEkrani;

@@ -10,20 +10,7 @@ const Client = () => {
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [selectedRoom, setSelectedRoom] = useState("General"); // Yeni satır: Seçilen odayı tutmak için bir state ekledik
-
-  useEffect(() => {
-    if (!username) {
-      const storedUsername = localStorage.getItem("username");
-      if (storedUsername) {
-        setUsername(storedUsername);
-      } else {
-        const newUsername = prompt("What is your username?");
-        setUsername(newUsername);
-        localStorage.setItem("username", newUsername);
-      }
-    }
-  }, [username]);
+  const [selectedRoom, setSelectedRoom] = useState("General");
 
   useEffect(() => {
     if (username) {
@@ -73,15 +60,18 @@ const Client = () => {
     if (socket && message && selectedRoom) {
       socket.emit("send", { message, room: selectedRoom });
       setMessage("");
-      setMessages((messages) => [...messages.reverse(), { user: { name: username }, text: message, date: moment().toISOString(), room: selectedRoom }].reverse());
+      setMessages((messages) => [
+        ...messages.reverse(),
+        { user: { name: username }, text: message, date: moment().toISOString(), room: selectedRoom },
+      ].reverse());
     }
   };
 
   return (
-    <div className="container">
-      <div className="chat-container">
-        <div className="chat-header">General Chat</div>
-        <div className="chat-messages">
+    <div className="container" style={{ backgroundColor: '#fafafa' }}>
+      <div className="chat-container" style={{ borderRadius: '10px' }}>
+        <div className="chat-header" style={{ backgroundColor: '#e0efed', borderRadius: '10px 10px 0 0' }}>Genel Sohbet</div>
+        <div className="chat-messages" style={{ backgroundColor: '#fafafa', borderRadius: '0 0 10px 10px' }}>
           {[...messages]
             .filter((msg) => msg.room === selectedRoom)
             .reverse()
@@ -94,16 +84,16 @@ const Client = () => {
             ))
           }
         </div>
-        <div className="chat-input">
+        <div className="chat-input" style={{ borderRadius: '0 0 10px 10px' }}>
           <input
             type="text"
             className="form-control"
-            placeholder="Enter your message"
+            placeholder="Mesajınızı girin..."
             value={message}
             onChange={(e) => setMessage(e.target.value)}
           />
-          <button className="btn btn-primary" id="submit" type="submit" onClick={submit}>
-            Send
+          <button className="button1" id="submit" type="submit" onClick={submit}>
+            Gönder
           </button>
         </div>
       </div>

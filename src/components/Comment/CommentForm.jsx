@@ -57,13 +57,13 @@ function CommentForm(props) {
         <div >
 
             <input
-                className=" input2"
                 type="text"
-                placeholder="text"
+                placeholder="Yorum Gönderin"
                 value={text}
                 onChange={(e) => handleText(e.target.value)}
+                style={{width: '750px', marginLeft:'30px', height: '45px'}}
             ></input>
-            <button type="button" className="button1" onClick={handleSubmit}>Comment</button>
+            <button type="button" className="button1" onClick={handleSubmit}>Gönder</button>
 
         </div>
     );

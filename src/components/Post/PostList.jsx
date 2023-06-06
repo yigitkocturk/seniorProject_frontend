@@ -6,6 +6,7 @@ const PostList = ({ filter }) => {
   const [isError, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [postList, setPostList] = useState([]);
+const [refreshList, setRefreshList] = useState(false);
 
   const refreshPosts = () => {
     fetch("/posts")
@@ -26,6 +27,10 @@ const PostList = ({ filter }) => {
   useEffect(() => {
     refreshPosts();
   }, []);
+
+  useEffect(() => {
+    refreshPosts();
+  }, [refreshList]); 
 
   if (isLoading) {
     return <div>Loading...</div>;
