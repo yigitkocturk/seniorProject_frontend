@@ -58,7 +58,7 @@ const Navbar = () => {
                     paddingTop: '10px',
                     fontSize: '35px',
                     color: '#fff',
-                    paddingLeft: '600px',
+                    paddingLeft: '750px',
                     fontFamily: 'Fantasy',
             
                   }}

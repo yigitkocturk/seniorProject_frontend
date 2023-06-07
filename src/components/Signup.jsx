@@ -56,13 +56,6 @@ const Signup = () => {
       }),
     })
       .then((res) => res.json())
-      .then((result) => {
-        localStorage.setItem("tokenKey", result.accessToken);
-        localStorage.setItem("refreshKey", result.refreshToken);
-        localStorage.setItem("currentUser", result.userId);
-        localStorage.setItem("userName", userName)
-        localStorage.setItem("name", name)
-      })
       .then((res) => console.log(res))
       .catch((err) => console.log(err))
   }
