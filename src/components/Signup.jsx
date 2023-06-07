@@ -68,7 +68,7 @@ const Signup = () => {
   }
 
   return (
-    <div className="vh-100 gradient-custom" style={{ backgroundColor: '#0d6efd' }}>
+    <div className="vh-100 gradient-custom" style={{ backgroundColor: '#a6c1bd' }}>
       <div className="container py-5 h-100">
         <div className="row justify-content-center align-items-center h-100">
           <div className="col-12 col-lg-9 col-xl-7">
@@ -77,28 +77,28 @@ const Signup = () => {
                 <h3 className="mb-4 pb-2 pb-md-0 mb-md-5">Sign Up</h3>
                 <Form>
                   <Form.Group className="mb-3" controlId="formBasicName">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" placeholder="Enter your name" onChange={(e) => handleName(e.target.value)} value={name} />
+                    <Form.Label>İsim</Form.Label>
+                    <Form.Control type="text" placeholder="Adınız Giriniz" onChange={(e) => handleName(e.target.value)} value={name} />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicName" >
-                    <Form.Label>Surname</Form.Label>
-                    <Form.Control type="text" placeholder="Enter your surname" onChange={(e) => handleSurname(e.target.value)} value={surname} />
+                    <Form.Label>Soyisim</Form.Label>
+                    <Form.Control type="text" placeholder="Soyadınız Giriniz" onChange={(e) => handleSurname(e.target.value)} value={surname} />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicName">
-                    <Form.Label>Username</Form.Label>
-                    <Form.Control type="text" placeholder="Enter your username" onChange={(e) => handleUserName(e.target.value)} value={userName} />
+                    <Form.Label>Kullanıcı Adı</Form.Label>
+                    <Form.Control type="text" placeholder="Kullanıcı Adınızı Giriniz" onChange={(e) => handleUserName(e.target.value)} value={userName} />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" onChange={(e) => handleEmail(e.target.value)} value={email} />
+                    <Form.Label>Mail Adresi</Form.Label>
+                    <Form.Control type="email" placeholder="Mail Adresinizi Giriniz" onChange={(e) => handleEmail(e.target.value)} value={email} />
                   </Form.Group>
                   <Form.Group className="mb-3" controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" onChange={(e) => handlePassword(e.target.value)} value={password} />
+                    <Form.Label>Şifre</Form.Label>
+                    <Form.Control type="password" placeholder="Şifrenizi  Giriniz" onChange={(e) => handlePassword(e.target.value)} value={password} />
                   </Form.Group>
                   <div className="d-grid">
                     <Button variant="primary" size="lg" type="submit" onClick={handleSubmit}>
-                      Sign Up
+                      Kayıt Ol
                     </Button>
                   </div>
                 </Form>

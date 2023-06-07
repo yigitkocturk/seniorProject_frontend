@@ -26,7 +26,7 @@ connection.connect((error) => {
 });
 
 const users = {};
-const rooms = ["General", "Oda1", "Oda2", "Oda3"];
+const rooms = ["Genel", "Alkol", "Sigara", "Kumar", "Teknoloji", "Alışveriş", "Kafein","Yeme", "İlişki",  "Eroin", "Kokain", "Esrar"];
 
 io.on("connection", (socket) => {
   socket.on("username", (username) => {

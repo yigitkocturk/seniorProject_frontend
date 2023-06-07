@@ -76,12 +76,12 @@ function Login() {
                             <MDBCardTitle style={{ marginLeft: '195px', color: '#0d6efd', fontSize: '35px', fontFamily: 'Fantasy'  }}>SHARE CIRCLE</MDBCardTitle>
                             <MDBCardImage src={logo} alt='logo'  style={{ width: '180px', height: '180px', marginLeft: '200px', marginTop: '15px',  borderRadius: '65px' }} />
                             <MDBCardBody style={{ width: '300px', marginLeft: '150px' }}>
-                                <MDBInput wrapperClass='mb-4' label='Username' id='form1' type='username' onChange={(i) => handleUsername(i.target.value)} />
-                                <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password' onChange={(i) => handlePassword(i.target.value)} />
-                                <MDBBtn className="mb-4 w-100" onClick={handleButton}>Sign in</MDBBtn>
+                                <MDBInput wrapperClass='mb-4' label='Kullanıcı Adı' id='form1' type='username' onChange={(i) => handleUsername(i.target.value)} />
+                                <MDBInput wrapperClass='mb-4' label='Şİfre' id='form2' type='password' onChange={(i) => handlePassword(i.target.value)} />
+                                <MDBBtn className="mb-4 w-100" onClick={handleButton}>Giriş Yap</MDBBtn>
                                 <MDBCardTitle>
-                                    <p style={{paddingLeft: '28px',  color: '#0d6efd'}}>Don't have an account?</p>
-                                    <MDBBtn className="mb-4 w-100 mt-3" onClick={handleNavigate}>Sign Up</MDBBtn>
+                                    <p style={{paddingLeft: '28px',  color: '#0d6efd'}}>Hesabınız yok mu?</p>
+                                    <MDBBtn className="mb-4 w-100 mt-3" onClick={handleNavigate}>Kayıt Ol</MDBBtn>
                                 </MDBCardTitle>
                             </MDBCardBody>
                         </MDBCol>

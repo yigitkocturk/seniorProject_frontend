@@ -30,6 +30,17 @@ const FiltrelemeEkrani = ({ handleFilterChange }) => {
     { id: 51, value: 'Eroin', name: "Eroin", image: eroin },
     { id: 23, value: 'Kokain', name: "Kokain", image: kokain },
     { id: 33, value: 'Esrar', name: "Esrar", image: esrar },
+    { id: 27, value: 'Alkol', name: "Alkol", image: alkol },
+    { id: 37, value: 'Sigara', name: "Sigara", image: sigara },
+    { id: 47, value: 'Kumar', name: "Kumar", image: kumar },
+    { id: 57, value: 'Teknoloji', name: "Teknoloji", image: teknoloji },
+    { id: 67, value: 'Alışveriş', name: "Alışveriş", image: alısveris },
+    { id: 217, value: 'Kafein', name: "Kafein", image: kafein },
+    { id: 317, value: 'Yeme', name: "Yeme", image: yeme },
+    { id: 417, value: 'İlişki', name: "İlişki", image: iliski },
+    { id: 517, value: 'Eroin', name: "Eroin", image: eroin },
+    { id: 237, value: 'Kokain', name: "Kokain", image: kokain },
+    { id: 337, value: 'Esrar', name: "Esrar", image: esrar },
   ];
 
   const handleClick = (value) => {
@@ -81,22 +92,22 @@ const FiltrelemeEkrani = ({ handleFilterChange }) => {
           >
             <div
               style={{
-                width: "75px",
-                height: "75px",
+                width: "52px",
+                height: "47px",
                 borderRadius: "50%",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                border: "2px solid #ccc", /* Updated border color to gray (#ccc) */
+                border: "2px solid #fff", 
               }}
             >
               <div
                 style={{
-                  width: "60px",
-                  height: "55px",
+                  width: "50px",
+                  height: "45px",
                   borderRadius: "50%",
                   overflow: "hidden",
-                  border: "2px solid #fff", /* Added white border to create a frame effect */
+                  border: "2px solid #fff",
                 }}
               >
                 <img

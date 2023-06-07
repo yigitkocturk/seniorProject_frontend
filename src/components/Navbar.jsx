@@ -49,7 +49,7 @@ const Navbar = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <a className="navbar-brand mt-1 mt-lg-0" href="/">
-              <img src={logo} height="50" alt="MDB Logo" loading="lazy" style={{        borderRadius: "15px"}}/>
+              <img src={logo} height="50" alt="MDB Logo" loading="lazy" style={{  borderRadius: "15px"}}/>
             </a>
             <div className="d-flex align-items-center justify-content-center rounded">
               <a href="/" style={{ textDecoration: 'none' }}>
@@ -70,11 +70,11 @@ const Navbar = () => {
           </div>
           <div className="d-flex align-items-center">
             <div className="dropdown">
-              <a href="/chatrooms" style={{ marginRight: '10px' }}>
-                <i className="far fa-comments fa-lg"></i>
+              <a href="/chatrooms" style={{ marginRight: '10px', color: 'white'}}>
+                <i className="far fa-comments fa-lg" ></i>
               </a>
             </div>
-            <div className="dropdown">
+            <div className="dropdown" style={{display: "inline-block", border:" 2px solid white", borderRadius: "50%"}}>
               <a
                 className="dropdown-toggle d-flex align-items-center hidden-arrow"
                 href="#"

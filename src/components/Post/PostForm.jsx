@@ -114,7 +114,7 @@ const PostForm = ({ userId, userName, onPostSubmit }) => {
           />
         </div>
       </div>
-      <div className="text-center" style={{backgroundColor: '#e0efed', padding: '7px'}}>
+      <div className="text-center" style={{backgroundColor: '#e0efed', padding: '2px'}}>
         <button
           type="button"
           className="button1 "

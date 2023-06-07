@@ -10,7 +10,7 @@ const Client = () => {
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [selectedRoom, setSelectedRoom] = useState("General");
+  const [selectedRoom, setSelectedRoom] = useState("Genel");
 
   useEffect(() => {
     if (username) {

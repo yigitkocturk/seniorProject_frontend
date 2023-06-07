@@ -10,13 +10,15 @@ const Home = () => {
   const [filter, setFilter] = useState('');
   const [refreshList, setRefreshList] = useState(false);
 
+  const handlePostSubmit = () => {
+    setRefreshList(!refreshList); // Toggle refreshList state
+  };
+
   const handleFilterChange = (name) => {
     setFilter(name);
   };
 
-  const handlePostSubmit = () => {
-    setRefreshList(!refreshList); // Toggle refreshList state
-  };
+
 
   return (
     <div className='container-fluid' style={{ backgroundColor: '#fafafa', height: '100vh' }}>

@@ -112,7 +112,6 @@ const UserActivity = () => {
         if (!res.ok) {
           throw new Error("An error occurred while deleting the post.");
         }
-        // Remove the deleted post from the postList
         setPostList((prevPostList) =>
           prevPostList.filter((post) => post.id !== postId)
         );
@@ -238,22 +237,27 @@ const UserActivity = () => {
                           style={{
                             display: "flex",
                             alignItems: "center",
+                            width: "100%",
+                            justifyContent: "space-between",
                           }}
-                          
                         >
-                          <Comment
-                            userId={comment.userId}
-                            userName={comment.userName}
-                            text={comment.text}
-                          />
-                          <IconButton
-                            aria-label="delete"
-                            className="delete-icon"
-                            onClick={() => deleteComment(comment.id)}
-                            style={{ color: "red", marginLeft: "10px" }}
-                          >
-                            <CloseIcon />
-                          </IconButton>
+                          <div style={{ flex: 9 }}>
+                            <Comment
+                              userId={comment.userId}
+                              userName={comment.userName}
+                              text={comment.text}
+                            />
+                          </div>
+                          <div style={{ flex: 1 }}>
+                            <IconButton
+                              aria-label="delete"
+                              className="delete-icon"
+                              onClick={() => deleteComment(comment.id)}
+                              style={{ color: "red" }}
+                            >
+                              <CloseIcon />
+                            </IconButton>
+                          </div>
                         </div>
                       ))
                     ) : (

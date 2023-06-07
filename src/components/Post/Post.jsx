@@ -136,7 +136,8 @@ const Post = (props) => {
                   src={`data:image/jpeg;base64,${imageData}`}
                   alt="User Profile"
                   className="mr-2 rounded-circle"
-                  style={{ height: "40px", width: "40px" }}
+                  style={{ height: "40px", width: "40px", display: "inline-block", border:" 2px solid white", borderRadius: "50%" }}
+                 
                 />
               )}
 
@@ -156,7 +157,7 @@ const Post = (props) => {
           </div>
         </Card.Header>
 
-        <div className="aspect-ratio-container" >
+        <div className="aspect-ratio-container" style={{backgroundColor: '#fafafa'}}>
           <div className="aspect-ratio-content">
             <Card.Img
               variant="top"

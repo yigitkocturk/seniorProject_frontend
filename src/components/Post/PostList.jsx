@@ -2,11 +2,10 @@ import React, { useState, useEffect } from "react";
 import Post from "../Post/Post";
 import "../../App.css";
 
-const PostList = ({ filter }) => {
+const PostList = ({ filter, refreshList }) => {
   const [isError, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [postList, setPostList] = useState([]);
-const [refreshList, setRefreshList] = useState(false);
 
   const refreshPosts = () => {
     fetch("/posts")
@@ -30,7 +29,7 @@ const [refreshList, setRefreshList] = useState(false);
 
   useEffect(() => {
     refreshPosts();
-  }, [refreshList]); 
+  }, [refreshList]);
 
   if (isLoading) {
     return <div>Loading...</div>;
